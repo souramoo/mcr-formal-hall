@@ -270,6 +270,10 @@ export class App extends Component {
     });
   };
 
+  handleCloseModalSeating = () => {
+    this.toggleEditingSeat()
+  };
+
   showRules() {
     this.setState({
       msg: {
@@ -330,9 +334,11 @@ export class App extends Component {
   }
 
   toggleEditingSeat() {
-    if (this.state.editingSeat) {
+    if (this.state.editingSeat || this.state.seatingPrompt) {
       // save then finish
       var seating = jQuery("#seatreq").val();
+      var seating2 = jQuery("#seatreq2").val();
+      if(this.state.seatingPrompt) { seating = seating2; }
       var tt = this;
       fetch(API + "/formal_edit_seat", {
         method: "post", credentials: 'include',
@@ -348,7 +354,7 @@ export class App extends Component {
         .then(function(data) {
           var a = tt.state.mybookings;
           a[0].seat = seating;
-          tt.setState({ editingSeat: false, mybookings: a }, tt.updateButtons);
+          tt.setState({ editingSeat: false, mybookings: a, seatingPrompt: false }, tt.updateButtons);
         });
     } else {
       // open ediitng
@@ -428,7 +434,7 @@ export class App extends Component {
         return response.json();
       })
       .then(function(data) {
-        tt.setState({ loadingmodal: false });
+        tt.setState({ loadingmodal: false, seatingPrompt: (tt.state.event.extendedProps.seatplan == "Y" && tt.state.mybookings.length == 0) });
         console.log(data);
         if (data.status == 0) {
           // update booking
@@ -1603,6 +1609,35 @@ export class App extends Component {
                   ) : '' }
               </DialogActions>
             </Dialog>
+
+
+            <Dialog
+              open={this.state.seatingPrompt}
+              scroll="paper"
+              style={{ zIndex: 130000000 }}
+              onClose={this.handleCloseModalSeating}
+              aria-labelledby="scroll-dialog-title"
+            >
+              <DialogTitle id="scroll-dialog-title">
+                Seating Requests
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  This formal takes seating requests! Please enter them below.<br />
+                  <Input
+                    id="seatreq2"
+                    placeholder="Enter seating request here."
+                    defaultValue={this.state.mybookings && this.state.mybookings.length > 0 ? this.state.mybookings[0].seat : ''}
+                  />
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleCloseModalSeating} color="primary">
+                  Okay
+                </Button>
+              </DialogActions>
+            </Dialog>
+
             <div className="ftr">
               Made with <span class="fa fa-heart" /> by{" "}
               <a href="https://github.com/moosd">souradip</a>.
