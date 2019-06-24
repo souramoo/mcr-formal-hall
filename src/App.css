@@ -2,6 +2,55 @@
   text-align: center;
 }
 
+.navbar a{
+color:white !important;
+}
+
+
+
+._loading_overlay_overlay {
+position: fixed !important;
+    height: 100vh !important;
+    width: 100vw !important;
+}
+
+.navbar a:hover {
+background: #431210 !important;
+}
+
+.navbar-brand:hover {
+background: none !important;
+}
+
+.navbar-brand img {
+height: 40px;
+position: absolute;
+    top: 0px;
+}
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(-360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(-360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+  }
+}
+
+.navbar-brand img:hover {
+  animation: spin 2s linear infinite;
+  transform-origin: 47.6% 49.3%;
+  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -31,3 +80,121 @@
     transform: rotate(360deg);
   }
 }
+.maxw {
+width: 50px
+}
+.fc-list-item-title {
+width: 600px;
+}
+
+.fc-list-empty {
+background: white !important;
+}
+
+@media(max-width: 768px){
+.sidebar {
+margin-top: 20px;
+}
+}
+
+.navbar-toggler-icon{display:none !important}
+
+
+.nav-link {
+    padding: .5rem 1rem !important;
+}
+
+
+.fa-check, .green .value {color: rgb(67, 160, 71) !important}
+.fa-times {color: rgb(166, 42, 37)}
+
+.old, .upcoming {
+color: #737373;
+}
+
+.fc-list-item:hover {cursor: pointer;}
+
+	.fc-scroller {height:  609px !important; }
+	.avatar, .label img { object-fit: cover;}
+.label img {
+width: 40px !important;
+    height: 40px !important;
+    margin-top: 11px !important;
+}
+.ui {
+
+  align-items: center;
+  justify-content: center;
+}
+
+.ftr {
+margin: 0 auto;
+width: 100%;
+text-align: center;
+padding: 20px;
+color: #666;
+font-size: 80%;
+}
+
+button img {
+object-fit: cover;
+}
+
+.diets input, .names input {
+    max-width: 166px !important;
+    padding: 2px 0 7px !important;
+}
+
+.ftr a, .ftr a:hover	{
+    color: black ;border-bottom: 1px dotted #0090C1;
+    border-color: black;    
+    text-decoration: none;
+}
+
+#seatreq {
+ text-align: center;
+}
+
+html, body {
+overflow-x: hidden;
+}
+@media (min-width: 768px) {
+.onlysmall{display:none}
+}
+.onlysmall{
+position: sticky;
+top: 20px;
+z-index:10000000;
+}
+
+@media (max-width: 768px) {
+.tophead{
+margin-top:70px;
+}
+.sidebar > center > div {
+	    margin-top: 20px;
+	    padding: 0 20px;
+}
+
+.onlybig{display:none}
+.fabbook {
+width: 300px !important;
+    height: 74px !important;
+border-radius: 44px !important;
+}
+}
+
+.fabbook {
+background-color: rgb(67, 160, 71) !important;
+}
+
+
+@keyframes greenfade {
+    0% {
+        background: rgb(67, 160, 71);
+    }
+    100% {
+        background: #fff;
+    }
+}
+
