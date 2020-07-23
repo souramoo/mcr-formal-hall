@@ -1640,7 +1640,7 @@ export class App extends Component {
 
             <div className="ftr">
               Made with <span class="fa fa-heart" /> by{" "}
-              <a href="https://github.com/moosd">souradip</a>.
+              <a href="https://github.com/souramoo">souradip</a>.
             </div>
           </LoadingOverlay>
         </Router>
