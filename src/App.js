@@ -71,10 +71,10 @@ import { Slide } from "material-auto-rotating-carousel";
 const { red, blue, green } = require("@material-ui/core/colors");
 const Button = require("@material-ui/core/Button").default;
 
+const API = "/api";
 //const API = "http://hadriel.caths.cam.ac.uk:1337/api";
 
 const stockPics = ["ade", "chris", "christian", "daniel", "elliot", "helen"];
-const API = "/api";
 
 export class App extends Component {
   constructor(props) {
@@ -625,7 +625,39 @@ export class App extends Component {
     return this.isCrsidPresent(this.state.event.extendedProps.booked);
   }
 
-  renderPrice() {
+  getInSameQuarter(a) {
+    var d = new Date(), d2 = new Date(a);
+    var q1 = Math.floor(d.getMonth() / 3), q2 = Math.floor(d2.getMonth() / 3);
+    return d.getFullYear() == d2.getFullYear() && q1 == q2;
+  }
+
+  renderPrice(bool) {
+    // check for if booked once already this term
+    var entitledToFree = false
+    
+    var y = new Date().getFullYear()
+    var m = new Date().getMonth()
+
+    if ( (y == 2020 && m >= 9) || (y == 2021 && m < 9)) // only for 2020/21
+      entitledToFree = true
+
+    var cevents = this.state.calendarEvents;
+    for (var a of cevents) {
+      var d = a.date;
+
+      if (this.getInSameQuarter(d)) { // if this term
+        if(this.isCrsidPresent(a.booked) && this.state.mybookings.length == 0) { // had a booking before and not this one
+          console.log(a.date)
+          entitledToFree = false
+        }
+      }
+    }
+
+    if(bool) {
+      return !entitledToFree
+    }
+
+    // otherwise
     if (this.state.mybookings.length > 0) {
       var totals = 0;
       totals += parseFloat(this.state.event.extendedProps.price);
@@ -633,12 +665,17 @@ export class App extends Component {
         (parseFloat(this.state.event.extendedProps.price) +
           parseFloat(this.state.event.extendedProps.gcharge)) *
         (this.state.mybookings.length - 1);
-      return (
-        <Header.Subheader style={{ fontWeight: "bold" }}>
-          Your total: £{totals.toFixed(2)}
-        </Header.Subheader>
-      );
-    } else return "";
+        if(entitledToFree) {
+          totals = 0
+        }
+        return (
+          <Header.Subheader style={{ fontWeight: "bold" }}>
+            Your total: £{totals.toFixed(2)}
+          </Header.Subheader>
+        );
+    } else {
+      return "";
+    }
   }
 
   renderSidebar() {
@@ -983,10 +1020,16 @@ export class App extends Component {
 
           <Header as="h2">
             Price
+            {this.renderPrice(true) ? 
             <Header.Subheader>
               For you: £
               {parseFloat(this.state.event.extendedProps.price).toFixed(2)}
             </Header.Subheader>
+            : 
+            <Header.Subheader>
+              For you: £0.00 (one free formal once per term)
+            </Header.Subheader>
+             }
             {this.state.event.extendedProps.guestlim > 0 ? (
               <Header.Subheader>
                 Guest surcharge: £
