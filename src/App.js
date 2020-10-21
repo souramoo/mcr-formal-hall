@@ -635,8 +635,8 @@ export class App extends Component {
     // check for if booked once already this term
     var entitledToFree = false
     
-    var y = new Date(this.state.event.extendedProps.date).getFullYear()
-    var m = new Date(this.state.event.extendedProps.date).getMonth()
+    var y = new Date(this.state.event.start).getFullYear()
+    var m = new Date(this.state.event.start).getMonth()
 
     if ( (y == 2020 && m >= 9) || (y == 2021 && m < 9)) // only for 2020/21
       entitledToFree = true
@@ -646,10 +646,10 @@ export class App extends Component {
     for (var a of cevents) {
       var d = a.date;
 
-      if (this.getInSameQuarter(d, this.state.event.extendedProps.date)) { // if this term
+      if (this.getInSameQuarter(d, this.state.event.start)) { // if this term
         if(this.isCrsidPresent(a.booked)) { // had a booking before and not this one
           entitledToFree = false
-          freeId = a.ID
+          if(freeId == -1 ) freeId = a.ID
         }
       }
     }
