@@ -24,7 +24,7 @@
     "react-horizontal-scrolling-menu": "^0.5.8",
     "react-loading-overlay": "^1.0.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.0",
+    "react-scripts": "5.0.1",
     "react-spinners": "^0.5.4",
     "react-swipeable-views": "^0.13.1",
     "reactstrap": "^8.0.0",
